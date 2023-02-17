@@ -55,7 +55,19 @@ class RegisterGrant:
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgIAAxkBAAENm1Bi_0Q9YClvUdjgvDLx0S5V3Z3UUgAClgcAAmMr4glEcXCvl0uDLSkE")
 
+    @staticmethod
+    async def cmd_reg(message: types.Message, state: FSMContext):
+        # file_step_1 = open("stet_1" + message.from_user.id + ".json")
+        await GrantsStates.first()
+        async with state.proxy() as data:
+            data['name_of_project'] = message.text
+        await GrantsStates.next()
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA")
+        await bot.send_message(message.from_user.id, "Введите логин для авторизации!",
+                                   reply_markup=get_back_menu())
     def register_handlers_system(self):
         self.dp.register_message_handler(self.cmd_start, commands=["start"])
-        # self.dp.register_message_handler(self.cmd_cancel_registration, Text(equals="Вернуться в главное меню 📜"),
-        #                                  state="*")
+        self.dp.register_message_handler(self.cmd_cancel_registration, Text(equals="Вернуться в главное меню 📜"),
+                                         state="*")
+        self.dp.register_message_handler(self.cmd_reg, lambda message: "Регистрация гранта 🔐" in message.text, state=None)
