@@ -1,45 +1,19 @@
-import requests
-from bs4 import BeautifulSoup
-
-url_measures = "https://myrosmol.ru/measures"
-url_test = "https://myrosmol.ru/measures/2"
-
-def check_status_code(status_code: int) -> bool:
-    """
-    The function check your status code after requests
-    :param status_code: Status of response
-    :type status_code: :obj: `int`
-    :return: True or False
-    :type: :obj: `str`
-    """
-    return True if status_code == 200 else False
+from aiogram.utils import executor
+from aiogram import Bot, Dispatcher, types
+from config import API_TOKEN
+from aiogram.contrib.fsm_storage.memory import MemoryStorage  # Позваляет хранить данные в оперативное памяти
 
 
-def get_measures(url: str) -> list[str]:
-    """
-    The function get all measures from FGASI
-    :param url: Url path
-    :return: Measures
-    :type: :obj: `str`
-    """
-    response = requests.get(url)
-    # print(response.status_code)
-    if check_status_code(response.status_code):
-        soup = BeautifulSoup(response.content, "html.parser")
-        print(soup.prettify())
-
-        temp = soup.find_all("div", {"class": "col-md-6 d-flex"})
-        for i in temp:
-            print(i)
+async def on_starttup(_):
+    print("Бот запущен!")
 
 
-def start_event_loop() -> None:
-    """
-    The function start all process
-    :return: None
-    :type: :obj: `None`
-    """
-    get_measures(url_test)
+def start_event_loop():
+    storage = MemoryStorage()
+    # Инициализируем бота
+    bot = Bot(token=API_TOKEN, parse_mode=types.ParseMode.HTML)
+    dp = Dispatcher(bot, storage=storage)
+    executor.start_polling(dp, skip_updates=True, on_startup=on_starttup)
 
 
 if __name__ == "__main__":
