@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from src.main import bot
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from src.keyboards.markups import get_menu_markup, get_back_menu
+from src.keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup
 
 
 class GrantsStates(StatesGroup):
@@ -63,11 +63,22 @@ class RegisterGrant:
             data['name_of_project'] = message.text
         await GrantsStates.next()
         await bot.send_sticker(message.from_user.id,
-                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA")
-        await bot.send_message(message.from_user.id, "Введите логин для авторизации!",
-                                   reply_markup=get_back_menu())
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_markup())
+        await bot.send_message(message.from_user.id, "Введите имя для регестрации вашего проекта!",
+                               reply_markup=get_back_menu())
+
+
+    @staticmethod
+    async def user_answer_1(message: types.Message, state: FSMContext):
+        async with state.proxy() as data:
+            data['region_of_project'] = message.text
+            await GrantsStates.next()
+            await message.answer("Регион реализации проекта")
+
     def register_handlers_system(self):
         self.dp.register_message_handler(self.cmd_start, commands=["start"])
         self.dp.register_message_handler(self.cmd_cancel_registration, Text(equals="Вернуться в главное меню 📜"),
                                          state="*")
-        self.dp.register_message_handler(self.cmd_reg, lambda message: "Регистрация гранта 🔐" in message.text, state=None)
+        self.dp.register_message_handler(self.cmd_reg, lambda message: "Регистрация гранта 🔐" in message.text,
+                                         state=None)
