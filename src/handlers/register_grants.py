@@ -29,34 +29,31 @@ class RegisterGrant:
 
     @staticmethod
     async def cmd_start(message: types.Message):
-        path = os.path.abspath('photo/title.jpeg')
-        # m_path = os.path.abspath("1.mp3")
+        path = os.path.abspath('images/title.jpeg')
         with open(path, 'rb') as photo:
             await bot.send_photo(message.from_user.id,
                                  photo=photo)
-        # with open(m_path, 'rb') as m_voice:
-        #     await bot.send_voice(message.from_user.id, voice=m_voice, duration=126)
-        await bot.send_message(message.from_user.id, "Добро пожаловать!\nЗдесь вы можете оформить бронь",
+        await bot.send_message(message.from_user.id, "Добро пожаловать!\nЗдесь вы можете сделать совй грант",
                                reply_markup=get_menu_markup())
         await message.delete()
 
-        # @staticmethod
-        # async def cmd_cancel_registration(message: types.Message, state: FSMContext):
-        #     await message.delete()
-        #     try:
-        #         await bot.delete_message(message.from_user.id, message_id=message.message_id - 1)
-        #     except:
-        #         pass
-        #     current_state = await state.get_state()
-        #     if current_state is None:
-        #         await message.answer('Вы вернулись в главное меню', reply_markup=keyboards_menu)
-        #         await bot.send_sticker(message.from_user.id,
-        #                                sticker="CAACAgIAAxkBAAENm1Bi_0Q9YClvUdjgvDLx0S5V3Z3UUgAClgcAAmMr4glEcXCvl0uDLSkE")
-        #         return
-        #     await state.finish()
-        #     await message.answer('Вы вернулись в главное меню', reply_markup=keyboards_menu)
-        #     await bot.send_sticker(message.from_user.id,
-        #                            sticker="CAACAgIAAxkBAAENm1Bi_0Q9YClvUdjgvDLx0S5V3Z3UUgAClgcAAmMr4glEcXCvl0uDLSkE")
+    @staticmethod
+    async def cmd_cancel_registration(message: types.Message, state: FSMContext):
+        await message.delete()
+        try:
+            await bot.delete_message(message.from_user.id, message_id=message.message_id - 1)
+        except:
+            pass
+        current_state = await state.get_state()
+        if current_state is None:
+            await message.answer('Вы вернулись в главное меню', reply_markup=get_menu_markup())
+            await bot.send_sticker(message.from_user.id,
+                                   sticker="CAACAgIAAxkBAAENm1Bi_0Q9YClvUdjgvDLx0S5V3Z3UUgAClgcAAmMr4glEcXCvl0uDLSkE")
+            return
+        await state.finish()
+        await message.answer('Вы вернулись в главное меню', reply_markup=get_menu_markup())
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgIAAxkBAAENm1Bi_0Q9YClvUdjgvDLx0S5V3Z3UUgAClgcAAmMr4glEcXCvl0uDLSkE")
 
     def register_handlers_system(self):
         self.dp.register_message_handler(self.cmd_start, commands=["start"])
