@@ -1,4 +1,5 @@
 import os
+import json
 from aiogram import types
 from aiogram.types import ContentType
 from aiogram.dispatcher import FSMContext
@@ -38,6 +39,12 @@ class RegisterGrant:
         await message.delete()
 
     @staticmethod
+    async def cmd_info_leopold(message: types.Message):
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgIAAxkBAAIBgGPwrk8EvM7uDdjEwB_-0rOUbrUhAAIlDwACS5ORSOscHL4fo5kKLgQ",
+                               reply_markup=get_leopold_markup())
+
+    @staticmethod
     async def cmd_cancel_registration(message: types.Message, state: FSMContext):
         await message.delete()
         try:
@@ -59,12 +66,9 @@ class RegisterGrant:
     async def cmd_reg(message: types.Message):
         # file_step_1 = open("stet_1" + message.from_user.id + ".json")
         await GrantsStates.first()
-        # async with state.proxy() as data:
-        #     data['name_of_project'] = message.text
-        # await GrantsStates.next()
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               reply_markup=get_leopold_markup())
+                               reply_markup=get_leopold_answer_1())
         await bot.send_message(message.from_user.id, "Введите имя для регестрации вашего проекта!",
                                reply_markup=get_back_menu())
 
@@ -135,29 +139,23 @@ class RegisterGrant:
         await message.answer("Вы успешно зарегестрировали грант")
         await message.answer_sticker(sticker="CAACAgIAAxkBAAP2Y_BulRlfTl0B55jHN5CU4-HJuNAAAsgRAAIV2ZlIt-U5Fr6t6couBA")
 
-
-
     @staticmethod
-    async def user_answer_(callback: types.CallbackQuery, state: FSMContext):
+    async def leopold_voice(callback: types.CallbackQuery):
         name = callback.data.split("_")[1]
-        # async with state.proxy() as data:
-        #     data['user_role'] = name
-        # await Registration.next()
-        # await bot.edit_message_text(
-        #     chat_id=callback.message.chat.id,
-        #     message_id=callback.message.message_id,
-        #     text="t",
-        #     reply_markup=None)
         await callback.message.answer_sticker(
             sticker="CAACAgIAAxkBAANSY_BgQw-sPsGhrx5lwatzgUAzrDEAAmgQAAKm-pFI2DyWQP_oN3YuBA")
-        # m_path = os.path.abspath("leopold_voices/first_help.mp3")
-        # m_tts_path = os.path.abspath("leo_" + name + ".mp3")
-        m_tts_path = os.path.abspath("leopold_voices/tts.mp3")
-        print(m_tts_path)
-        # with open(m_path, 'rb') as m_voice:
-        #     await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
+        m_tts_path = os.path.abspath("leo_" + name + ".mp3")
         with open(m_tts_path, 'rb') as m_voice:
             await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
+
+    @staticmethod
+    async def leopold_question(callback: types.CallbackQuery):
+        with open("dataset/question.json", "r") as dataset:
+            data = json.load(dataset)
+        name = callback.data.split("_")[1]
+        await callback.message.answer_sticker(
+            sticker="CAACAgIAAxkBAAIBaWPwrA89ykFxTaXNBG_gNSfBl_GgAAJgEgACM0iQSEF3NGa0-C4JLgQ")
+        await bot.send_message(callback.from_user.id, text=data.get(name))
 
     @staticmethod
     async def get_id(message: types.Message):
@@ -169,15 +167,20 @@ class RegisterGrant:
                                          state="*")
         self.dp.register_message_handler(self.cmd_reg, lambda message: "Регистрация гранта 🔐" in message.text,
                                          state=None)
+        self.dp.register_message_handler(self.cmd_info_leopold, lambda message: "Леопольд 🦁" in message.text,
+                                         state=None)
         self.dp.register_message_handler(self.user_answer_1, state=GrantsStates.name_of_project)
         self.dp.register_message_handler(self.user_answer_2, state=GrantsStates.region_of_project)
-        self.dp.register_message_handler(self.user_answer_3, content_types=['photo'], state=GrantsStates.logo_of_project)
+        self.dp.register_message_handler(self.user_answer_3, content_types=['photo'],
+                                         state=GrantsStates.logo_of_project)
         self.dp.register_message_handler(self.user_answer_4, state=GrantsStates.description_of_project)
         self.dp.register_message_handler(self.user_answer_5, state=GrantsStates.manager_experience)
         self.dp.register_message_handler(self.user_answer_6, state=GrantsStates.manager_function)
         self.dp.register_message_handler(self.user_answer_7, state=GrantsStates.address_manager)
         self.dp.register_message_handler(self.user_answer_8, state=GrantsStates.resume_manager)
         self.dp.register_message_handler(self.user_answer_9, state=GrantsStates.manager_link_video)
-        self.dp.register_callback_query_handler(self.user_answer_, Text(startswith="leopold_"),
+        self.dp.register_callback_query_handler(self.leopold_voice, Text(startswith="leopold_"),
+                                                state='*')
+        self.dp.register_callback_query_handler(self.leopold_question, Text(startswith="question_"),
                                                 state='*')
         self.dp.register_message_handler(self.get_id, content_types=[ContentType.ANY])
