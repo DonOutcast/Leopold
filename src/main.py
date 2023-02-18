@@ -2,7 +2,7 @@ from aiogram.utils import executor
 from aiogram import Bot, Dispatcher, types
 from config import API_TOKEN
 from aiogram.contrib.fsm_storage.memory import MemoryStorage  # Позваляет хранить данные в оперативное памяти
-from src.handlers import register_grants
+from handlers import register_grants
 from leopold_voices.init_voices import init_tts
 
 storage = MemoryStorage()
