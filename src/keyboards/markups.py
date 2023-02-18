@@ -87,3 +87,9 @@ def get_leopold_answer_9() -> InlineKeyboardMarkup:
     leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_9")
     return leopold_markup.add(leopold_start_button, leopold_question_button)
 
+def get_leopold_answer_10() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_10')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_10")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
+

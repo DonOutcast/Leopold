@@ -10,5 +10,5 @@ RUN apt-get update \
  && pip install --no-cache-dir -r requirements.txt \
  && rm -rf /var/lib/apt/lists/*
 RUN pip install -r requirements.txt
-COPY src src
-CMD ["python", "-u", "src/main.py"]
+COPY src .
+CMD ["python", "-u", "main.py"]
