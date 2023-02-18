@@ -33,9 +33,9 @@ class RegisterGrant:
     @staticmethod
     async def cmd_start(message: types.Message):
         path = os.path.abspath('images/title.png')
-        with open(path, 'rb') as photo:
-            await bot.send_photo(message.from_user.id,
-                                 photo=photo)
+        # with open(path, 'rb') as photo:
+        await bot.send_photo(message.from_user.id,
+                                 photo="AgACAgIAAxkBAAIDLGPxL__bciVF2NB4BYQBsT14whyhAAIryDEbzn6RS8SlXT0gyqKmAQADAgADeQADLgQ")
         await bot.send_message(message.from_user.id, "Добро пожаловать!\nЗдесь вы можете сделать совй грант",
                                reply_markup=get_menu_markup())
         await message.delete()
