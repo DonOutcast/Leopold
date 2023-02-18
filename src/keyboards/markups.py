@@ -27,6 +27,8 @@ def get_leopold_markup() -> InlineKeyboardMarkup:
     return leopold_markup.add(leopold_start_button, leopold_question_button)
 
 
+
+
 def get_leopold_answer_1() -> InlineKeyboardMarkup:
     leopold_markup = InlineKeyboardMarkup(row_width=1)
     leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_1')

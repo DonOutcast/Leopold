@@ -4,9 +4,10 @@ from aiogram import types
 from aiogram.types import ContentType
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
-from src.main import bot
+from main import bot
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from src.keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup, get_leopold_answer_1
+from keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup, get_leopold_answer_1, \
+    get_leopold_answer_2
 
 
 class GrantsStates(StatesGroup):
@@ -66,11 +67,11 @@ class RegisterGrant:
     async def cmd_reg(message: types.Message):
         # file_step_1 = open("stet_1" + message.from_user.id + ".json")
         await GrantsStates.first()
+        await bot.send_message(message.from_user.id, "Введите имя для регестрации вашего проекта!",
+                               reply_markup=get_back_menu())
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
                                reply_markup=get_leopold_answer_1())
-        await bot.send_message(message.from_user.id, "Введите имя для регестрации вашего проекта!",
-                               reply_markup=get_back_menu())
 
     @staticmethod
     async def user_answer_1(message: types.Message, state: FSMContext):
@@ -80,7 +81,7 @@ class RegisterGrant:
             await message.answer("Регион реализации проекта")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               reply_markup=get_leopold_answer_1())
+                               reply_markup=get_leopold_answer_2())
 
     @staticmethod
     async def user_answer_2(message: types.Message, state: FSMContext):
@@ -88,6 +89,9 @@ class RegisterGrant:
             data['region_of_project'] = message.text
             await GrantsStates.next()
             await message.answer("Логотип вашего проекта")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_2())
 
     @staticmethod
     async def user_answer_3(message: types.Message, state: FSMContext):
@@ -95,6 +99,9 @@ class RegisterGrant:
             data['logo_of_project'] = message.photo[0].file_id
             await GrantsStates.next()
             await message.answer("Общая информация о проекте")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               )
 
     @staticmethod
     async def user_answer_4(message: types.Message, state: FSMContext):
@@ -102,6 +109,9 @@ class RegisterGrant:
             data['description_of_project'] = message.text
         await GrantsStates.next()
         await message.answer("Опыт руководителя проекта")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               )
 
     @staticmethod
     async def user_answer_5(message: types.Message, state: FSMContext):
@@ -109,6 +119,9 @@ class RegisterGrant:
             data['manager_experience'] = message.text
         await GrantsStates.next()
         await message.answer("Описания функциоанла руководителя")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               )
 
     @staticmethod
     async def user_answer_6(message: types.Message, state: FSMContext):
@@ -116,6 +129,9 @@ class RegisterGrant:
             data['manager_function'] = message.text
         await GrantsStates.next()
         await message.answer("Адрес регистрации руководителя проекта")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               )
 
     @staticmethod
     async def user_answer_7(message: types.Message, state: FSMContext):
@@ -123,6 +139,9 @@ class RegisterGrant:
             data['address_manager'] = message.text
         await GrantsStates.next()
         await message.answer("Ссылка на ваше резюме")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               )
 
     @staticmethod
     async def user_answer_8(message: types.Message, state: FSMContext):
@@ -130,6 +149,9 @@ class RegisterGrant:
             data['resume_manager'] = message.text
         await GrantsStates.next()
         await message.answer("Видео-визитка(ссылка на ролик на любом видеохостинге)")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               )
 
     @staticmethod
     async def user_answer_9(message: types.Message, state: FSMContext):
@@ -138,6 +160,9 @@ class RegisterGrant:
         await state.finish()
         await message.answer("Вы успешно зарегестрировали грант")
         await message.answer_sticker(sticker="CAACAgIAAxkBAAP2Y_BulRlfTl0B55jHN5CU4-HJuNAAAsgRAAIV2ZlIt-U5Fr6t6couBA")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               )
 
     @staticmethod
     async def leopold_voice(callback: types.CallbackQuery):

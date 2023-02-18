@@ -4,6 +4,7 @@ from config import API_TOKEN
 from aiogram.contrib.fsm_storage.memory import MemoryStorage  # Позваляет хранить данные в оперативное памяти
 from src.handlers import register_grants
 from leopold_voices.init_voices import init_tts
+
 storage = MemoryStorage()
 bot = Bot(token=API_TOKEN, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot, storage=storage)
