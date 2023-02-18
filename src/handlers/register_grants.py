@@ -7,15 +7,13 @@ from aiogram.dispatcher.filters import Text
 from main import bot
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup, get_leopold_answer_1, \
-    get_leopold_answer_2
+    get_leopold_answer_2, get_leopold_answer_3, get_leopold_answer_4, get_leopold_answer_5
 
 
 class GrantsStates(StatesGroup):
     name_of_project = State()
     region_of_project = State()
     logo_of_project = State()
-    # auth_of_project = State()
-    # auth_number = State()
     description_of_project = State()
     manager_experience = State()
     manager_function = State()
@@ -31,7 +29,7 @@ class RegisterGrant:
 
     @staticmethod
     async def cmd_start(message: types.Message):
-        path = os.path.abspath('images/title.jpeg')
+        path = os.path.abspath('images/title.png')
         with open(path, 'rb') as photo:
             await bot.send_photo(message.from_user.id,
                                  photo=photo)
@@ -78,20 +76,20 @@ class RegisterGrant:
         async with state.proxy() as data:
             data['name_of_project'] = message.text
             await GrantsStates.next()
-            await message.answer("Регион реализации проекта")
-        await bot.send_sticker(message.from_user.id,
-                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               reply_markup=get_leopold_answer_2())
+            await message.answer("Укажите регион реализации проекта.")
+        await bot.send_photo(message.from_user.id, photo="AgACAgIAAxkBAAICLGPw_oj4QJwM6qyfUKH2AAFGWN-aigACw8IxG85-iUs2ycnEtkNDowEAAwIAA3kAAy4E",
+                             reply_markup=get_leopold_answer_2())
 
     @staticmethod
     async def user_answer_2(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['region_of_project'] = message.text
             await GrantsStates.next()
-            await message.answer("Логотип вашего проекта")
         await bot.send_sticker(message.from_user.id,
-                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               reply_markup=get_leopold_answer_2())
+                               sticker="CAACAgIAAxkBAAICRWPxAAHaqbL7kMO5Bd1gzPPnASSARQAChyUAAs5-iUvaIQGVdXUjTy4E",
+                               reply_markup=get_leopold_answer_3())
+        await message.answer("Логотип вашего проекта")
+
 
     @staticmethod
     async def user_answer_3(message: types.Message, state: FSMContext):
@@ -101,7 +99,7 @@ class RegisterGrant:
             await message.answer("Общая информация о проекте")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               )
+                               reply_markup=get_leopold_answer_4())
 
     @staticmethod
     async def user_answer_4(message: types.Message, state: FSMContext):
@@ -110,7 +108,8 @@ class RegisterGrant:
         await GrantsStates.next()
         await message.answer("Опыт руководителя проекта")
         await bot.send_sticker(message.from_user.id,
-                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               sticker="CAACAgIAAxkBAAICcmPxA2jkWcLb-C_lbO7YGcIW8b69AAKlJQACzn6JS_ibAYcTOs9cLgQ",
+                               reply_markup=get_leopold_answer_4()
                                )
 
     @staticmethod
@@ -121,7 +120,7 @@ class RegisterGrant:
         await message.answer("Описания функциоанла руководителя")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               )
+                               reply_markup=get_leopold_answer_5())
 
     @staticmethod
     async def user_answer_6(message: types.Message, state: FSMContext):
