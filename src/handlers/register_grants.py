@@ -32,11 +32,9 @@ class RegisterGrant:
 
     @staticmethod
     async def cmd_start(message: types.Message):
-        path = os.path.abspath('images/title.png')
-        # with open(path, 'rb') as photo:
         await bot.send_photo(message.from_user.id,
                                  photo="AgACAgIAAxkBAAIDLGPxL__bciVF2NB4BYQBsT14whyhAAIryDEbzn6RS8SlXT0gyqKmAQADAgADeQADLgQ")
-        await bot.send_message(message.from_user.id, "Добро пожаловать!\nЗдесь вы можете сделать совй грант",
+        await bot.send_message(message.from_user.id, "Добро пожаловать!\nЗдесь вы можете зарегистрировать свой грант",
                                reply_markup=get_menu_markup())
         await message.delete()
 
@@ -66,9 +64,8 @@ class RegisterGrant:
 
     @staticmethod
     async def cmd_reg(message: types.Message):
-        # file_step_1 = open("stet_1" + message.from_user.id + ".json")
         await GrantsStates.first()
-        await bot.send_message(message.from_user.id, "Введите имя для регестрации вашего проекта!",
+        await bot.send_message(message.from_user.id, "Введите имя для регистрации вашего проекта!",
                                reply_markup=get_back_menu())
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
@@ -182,7 +179,7 @@ class RegisterGrant:
         async with state.proxy() as data:
             data['manager_link_video'] = message.text
         await state.finish()
-        await message.answer("Вы успешно зарегестрировали грант")
+        await message.answer("Вы успешно зарегистрировали грант")
         await message.answer_sticker(sticker="CAACAgIAAxkBAAP2Y_BulRlfTl0B55jHN5CU4-HJuNAAAsgRAAIV2ZlIt-U5Fr6t6couBA")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
