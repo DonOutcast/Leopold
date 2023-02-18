@@ -41,3 +41,45 @@ def get_leopold_answer_2() -> InlineKeyboardMarkup:
     leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_2')
     leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_2")
     return leopold_markup.add(leopold_start_button, leopold_question_button)
+
+def get_leopold_answer_3() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_3')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_3")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
+
+def get_leopold_answer_4() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_4')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_4")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
+
+def get_leopold_answer_5() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_5')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_5")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
+
+def get_leopold_answer_6() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_6')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_6")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
+
+def get_leopold_answer_7() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_7')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_7")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
+
+def get_leopold_answer_8() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_8')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_8")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
+
+def get_leopold_answer_9() -> InlineKeyboardMarkup:
+    leopold_markup = InlineKeyboardMarkup(row_width=1)
+    leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_9')
+    leopold_question_button = InlineKeyboardButton(text="Спросить Леопольда 🦁", callback_data="question_9")
+    return leopold_markup.add(leopold_start_button, leopold_question_button)
