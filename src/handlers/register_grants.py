@@ -29,6 +29,9 @@ class RegisterGrant:
 
     @staticmethod
     async def cmd_start(message: types.Message):
+        m_path = os.path.abspath("first_help.mp3")
+        with open(m_path, 'rb') as m_voice:
+            await bot.send_voice(message.from_user.id, voice=m_voice, duration=26)
         path = os.path.abspath('images/title.jpeg')
         with open(path, 'rb') as photo:
             await bot.send_photo(message.from_user.id,
@@ -68,7 +71,6 @@ class RegisterGrant:
         await bot.send_message(message.from_user.id, "Введите имя для регестрации вашего проекта!",
                                reply_markup=get_back_menu())
 
-
     @staticmethod
     async def user_answer_1(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
@@ -76,9 +78,31 @@ class RegisterGrant:
             await GrantsStates.next()
             await message.answer("Регион реализации проекта")
 
+    @staticmethod
+    async def user_answer_2(callback: types.CallbackQuery, state: FSMContext):
+        name = callback.data.split("_")[1]
+        # async with state.proxy() as data:
+        #     data['user_role'] = name
+        # await Registration.next()
+        # await bot.edit_message_text(
+        #     chat_id=callback.message.chat.id,
+        #     message_id=callback.message.message_id,
+        #     text=callback.message.text,
+        #     reply_markup=None)
+        # print("in function")
+        m_path = os.path.abspath("leopold_voices/first_help.mp3")
+        m_tts_path = os.path.abspath("leopold_voices/tts.mp3")
+        with open(m_path, 'rb') as m_voice:
+            await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
+        with open(m_tts_path, 'rb') as m_voice:
+            await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
+        await callback.message.answer("Ведите свой уникальный токен: ")
+
     def register_handlers_system(self):
         self.dp.register_message_handler(self.cmd_start, commands=["start"])
         self.dp.register_message_handler(self.cmd_cancel_registration, Text(equals="Вернуться в главное меню 📜"),
                                          state="*")
         self.dp.register_message_handler(self.cmd_reg, lambda message: "Регистрация гранта 🔐" in message.text,
                                          state=None)
+        self.dp.register_callback_query_handler(self.user_answer_2, Text(startswith="leopold_"),
+                                                state='*')
