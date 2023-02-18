@@ -3,9 +3,9 @@ from aiogram import types
 from aiogram.types import ContentType
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
-from src.main import bot
+from main import bot
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from src.keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup, get_leopold_answer_1
+from keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup, get_leopold_answer_1, get_leopold_answer_2, get_leopold_answer_3, get_leopold_answer_4, get_leopold_answer_5, get_leopold_answer_6, get_leopold_answer_7, get_leopold_answer_8, get_leopold_answer_9
 
 
 class GrantsStates(StatesGroup):
@@ -62,11 +62,11 @@ class RegisterGrant:
         # async with state.proxy() as data:
         #     data['name_of_project'] = message.text
         # await GrantsStates.next()
-        await bot.send_sticker(message.from_user.id,
-                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               reply_markup=get_leopold_markup())
         await bot.send_message(message.from_user.id, "Введите имя для регестрации вашего проекта!",
                                reply_markup=get_back_menu())
+        await bot.send_sticker(message.from_user.id,
+                        sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                        reply_markup=get_leopold_markup())
 
     @staticmethod
     async def user_answer_1(message: types.Message, state: FSMContext):
@@ -84,6 +84,9 @@ class RegisterGrant:
             data['region_of_project'] = message.text
             await GrantsStates.next()
             await message.answer("Логотип вашего проекта")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_2())
 
     @staticmethod
     async def user_answer_3(message: types.Message, state: FSMContext):
@@ -91,6 +94,9 @@ class RegisterGrant:
             data['logo_of_project'] = message.photo[0].file_id
             await GrantsStates.next()
             await message.answer("Общая информация о проекте")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_3())
 
     @staticmethod
     async def user_answer_4(message: types.Message, state: FSMContext):
@@ -98,6 +104,9 @@ class RegisterGrant:
             data['description_of_project'] = message.text
         await GrantsStates.next()
         await message.answer("Опыт руководителя проекта")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_4())
 
     @staticmethod
     async def user_answer_5(message: types.Message, state: FSMContext):
@@ -105,6 +114,9 @@ class RegisterGrant:
             data['manager_experience'] = message.text
         await GrantsStates.next()
         await message.answer("Описания функциоанла руководителя")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_5())
 
     @staticmethod
     async def user_answer_6(message: types.Message, state: FSMContext):
@@ -112,6 +124,9 @@ class RegisterGrant:
             data['manager_function'] = message.text
         await GrantsStates.next()
         await message.answer("Адрес регистрации руководителя проекта")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_6())
 
     @staticmethod
     async def user_answer_7(message: types.Message, state: FSMContext):
@@ -119,6 +134,9 @@ class RegisterGrant:
             data['address_manager'] = message.text
         await GrantsStates.next()
         await message.answer("Ссылка на ваше резюме")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_7())
 
     @staticmethod
     async def user_answer_8(message: types.Message, state: FSMContext):
@@ -126,6 +144,9 @@ class RegisterGrant:
             data['resume_manager'] = message.text
         await GrantsStates.next()
         await message.answer("Видео-визитка(ссылка на ролик на любом видеохостинге)")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_8())
 
     @staticmethod
     async def user_answer_9(message: types.Message, state: FSMContext):
@@ -134,6 +155,9 @@ class RegisterGrant:
         await state.finish()
         await message.answer("Вы успешно зарегестрировали грант")
         await message.answer_sticker(sticker="CAACAgIAAxkBAAP2Y_BulRlfTl0B55jHN5CU4-HJuNAAAsgRAAIV2ZlIt-U5Fr6t6couBA")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_9())
 
 
 
@@ -151,8 +175,8 @@ class RegisterGrant:
         await callback.message.answer_sticker(
             sticker="CAACAgIAAxkBAANSY_BgQw-sPsGhrx5lwatzgUAzrDEAAmgQAAKm-pFI2DyWQP_oN3YuBA")
         # m_path = os.path.abspath("leopold_voices/first_help.mp3")
-        # m_tts_path = os.path.abspath("leo_" + name + ".mp3")
-        m_tts_path = os.path.abspath("leopold_voices/tts.mp3")
+        # m_tts_path = os.path.abspath("leo_" + name + ".mp3") 
+        m_tts_path = os.path.abspath("leopold_voices/leo_" + name + ".mp3")
         print(m_tts_path)
         # with open(m_path, 'rb') as m_voice:
         #     await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
