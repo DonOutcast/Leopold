@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from src.main import bot
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from src.keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup
+from src.keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup, get_leopold_answer_1
 
 
 class GrantsStates(StatesGroup):
@@ -74,6 +74,9 @@ class RegisterGrant:
             data['name_of_project'] = message.text
             await GrantsStates.next()
             await message.answer("Регион реализации проекта")
+        await bot.send_sticker(message.from_user.id,
+                               sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_1())
 
     @staticmethod
     async def user_answer_2(message: types.Message, state: FSMContext):
@@ -88,7 +91,6 @@ class RegisterGrant:
             data['logo_of_project'] = message.photo[0].file_id
             await GrantsStates.next()
             await message.answer("Общая информация о проекте")
-            print(data.values())
 
     @staticmethod
     async def user_answer_4(message: types.Message, state: FSMContext):
@@ -129,9 +131,9 @@ class RegisterGrant:
     async def user_answer_9(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['manager_link_video'] = message.text
-            print(data.values())
         await state.finish()
         await message.answer("Вы успешно зарегестрировали грант")
+        await message.answer_sticker(sticker="CAACAgIAAxkBAAP2Y_BulRlfTl0B55jHN5CU4-HJuNAAAsgRAAIV2ZlIt-U5Fr6t6couBA")
 
 
 
@@ -148,10 +150,12 @@ class RegisterGrant:
         #     reply_markup=None)
         await callback.message.answer_sticker(
             sticker="CAACAgIAAxkBAANSY_BgQw-sPsGhrx5lwatzgUAzrDEAAmgQAAKm-pFI2DyWQP_oN3YuBA")
-        m_path = os.path.abspath("leopold_voices/first_help.mp3")
+        # m_path = os.path.abspath("leopold_voices/first_help.mp3")
+        # m_tts_path = os.path.abspath("leo_" + name + ".mp3")
         m_tts_path = os.path.abspath("leopold_voices/tts.mp3")
-        with open(m_path, 'rb') as m_voice:
-            await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
+        print(m_tts_path)
+        # with open(m_path, 'rb') as m_voice:
+        #     await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
         with open(m_tts_path, 'rb') as m_voice:
             await bot.send_voice(callback.from_user.id, voice=m_voice, duration=14)
 

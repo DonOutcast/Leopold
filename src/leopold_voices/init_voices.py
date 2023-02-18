@@ -18,6 +18,8 @@
 
 from gtts import gTTS
 
-tts = gTTS(text="Привет я твой голосовой помощник Леопольд" , lang='ru')
-tts.save("tts.mp3")
+tts = gTTS(text="Привет я твой голосовой помощник Леопольд", lang='ru')
+tts.save("leo_start.mp3")
 
+tts = gTTS(text="Имя может быть любым каким только ты пожелаешь давай смелее друг мой", lang='ru')
+tts.save("leo_1.mp3")
