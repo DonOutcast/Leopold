@@ -7,7 +7,8 @@ from aiogram.dispatcher.filters import Text
 from main import bot
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from keyboards.markups import get_menu_markup, get_back_menu, get_leopold_markup, get_leopold_answer_1, \
-    get_leopold_answer_2
+    get_leopold_answer_2, get_leopold_answer_3, get_leopold_answer_4, get_leopold_answer_5, get_leopold_answer_6, \
+    get_leopold_answer_7, get_leopold_answer_8, get_leopold_answer_9
 
 
 class GrantsStates(StatesGroup):
@@ -81,7 +82,7 @@ class RegisterGrant:
             await message.answer("Регион реализации проекта")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
-                               reply_markup=get_leopold_answer_2())
+                               reply_markup=get_leopold_answer_1())
 
     @staticmethod
     async def user_answer_2(message: types.Message, state: FSMContext):
@@ -101,6 +102,7 @@ class RegisterGrant:
             await message.answer("Общая информация о проекте")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_3()
                                )
 
     @staticmethod
@@ -111,6 +113,7 @@ class RegisterGrant:
         await message.answer("Опыт руководителя проекта")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_4()
                                )
 
     @staticmethod
@@ -118,9 +121,10 @@ class RegisterGrant:
         async with state.proxy() as data:
             data['manager_experience'] = message.text
         await GrantsStates.next()
-        await message.answer("Описания функциоанла руководителя")
+        await message.answer("Описание функционала руководителя")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_5()
                                )
 
     @staticmethod
@@ -131,6 +135,7 @@ class RegisterGrant:
         await message.answer("Адрес регистрации руководителя проекта")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_6()
                                )
 
     @staticmethod
@@ -141,6 +146,7 @@ class RegisterGrant:
         await message.answer("Ссылка на ваше резюме")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_7()
                                )
 
     @staticmethod
@@ -151,6 +157,7 @@ class RegisterGrant:
         await message.answer("Видео-визитка(ссылка на ролик на любом видеохостинге)")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_8()
                                )
 
     @staticmethod
@@ -162,6 +169,7 @@ class RegisterGrant:
         await message.answer_sticker(sticker="CAACAgIAAxkBAAP2Y_BulRlfTl0B55jHN5CU4-HJuNAAAsgRAAIV2ZlIt-U5Fr6t6couBA")
         await bot.send_sticker(message.from_user.id,
                                sticker="CAACAgEAAxkBAAENoVljAh8xTOx1Nmxyk4ruq8V7cITCYQAC7AcAAuN4BAAB6DEEbU_xFOwpBA",
+                               reply_markup=get_leopold_answer_9()
                                )
 
     @staticmethod
