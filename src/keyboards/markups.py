@@ -7,12 +7,8 @@ def get_menu_markup() -> ReplyKeyboardMarkup:
     help_button = KeyboardButton("О себе 🆘")
     information_button = KeyboardButton('Информация ⚠️')
     registration_button = KeyboardButton('Регистрация гранта 🔐')
-    booking_button = KeyboardButton('Бронирование ✅')
-    my_bookings_button = KeyboardButton('Мои брони 📝')
-    admin_button = KeyboardButton('Добавить объект 👨🏻‍💻')
     keyboards_menu = ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboards_menu.row(registration_button, admin_button).row(booking_button, my_bookings_button).row(help_button,
-                                                                                                      information_button).add()
+    keyboards_menu.row(registration_button).row(help_button, information_button).add()
 
     return keyboards_menu
 
@@ -28,6 +24,7 @@ def get_leopold_markup() -> InlineKeyboardMarkup:
     leopold_markup = InlineKeyboardMarkup(row_width=1)
     leopold_start_button = InlineKeyboardButton(text="Позвать Леопольда 🦁", callback_data='leopold_start')
     return leopold_markup.add(leopold_start_button)
+
 
 def get_leopold_answer_1() -> InlineKeyboardMarkup:
     leopold_markup = InlineKeyboardMarkup(row_width=1)
